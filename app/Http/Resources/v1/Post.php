@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\v1;
 
+use App\Traits\HasImage;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class Post extends JsonResource
@@ -14,6 +15,18 @@ class Post extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'title' => $this->title,
+            'image' => $this->image,
+            'body' => $this->body,
+            'likes_count' => $this->likes_count,
+            'comments_count' => $this->comments_count
+        ];
+    }
+
+    public function with($request)
+    {
+        return ['status' => 'success'];
     }
 }

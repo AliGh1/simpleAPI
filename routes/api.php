@@ -24,6 +24,9 @@ Route::prefix('v1')->namespace('App\Http\Controllers\Api\v1')->group(function ()
         Route::prefix('admin')->namespace('admin')->group(function (){
             Route::resource('categories', 'CategoryController')
                 ->except(['create', 'edit']);
+
+            Route::resource('posts', 'PostController')
+                ->except('create', 'edit');
         });
     });
 

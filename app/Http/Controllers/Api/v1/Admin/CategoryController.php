@@ -8,7 +8,7 @@ use App\Http\Resources\v1\PostCollection;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
-use App\Http\Resources\v1\Category as CategoryResponse;
+
 
 class CategoryController extends Controller
 {
