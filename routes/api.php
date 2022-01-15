@@ -20,7 +20,13 @@ Route::prefix('v1')->namespace('App\Http\Controllers\Api\v1')->group(function ()
 
     Route::middleware('auth:api')->group(function (){
         Route::patch('/change-password', 'UserController@changePassword');
+
+        Route::prefix('admin')->namespace('admin')->group(function (){
+            Route::resource('categories', 'CategoryController')
+                ->except(['create', 'edit']);
+        });
     });
+
 });
 
 
