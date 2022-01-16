@@ -18,9 +18,6 @@ class LikeController extends Controller
         $class_name = class_basename($likeable);
 
         if($user->isLiked($likeable)){
-            if (Gate::denies('delete-like', $likeable)) {
-                return Response::forbidden();
-            }
             $user->unlike($likeable);
             $likeable->update([
                 'likes_count' => --$likeable->likes_count
