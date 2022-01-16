@@ -17,12 +17,13 @@ class CreateCommentsTable extends Migration
             $table->id();
             $table->integer('parent_id')->default(0);
 
+            $table->string('body');
+
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('post_id')->constrained('posts')->onDelete('cascade');
 
             $table->unsignedInteger('likes_count')->default(0);
 
-            $table->unique(['user_id', 'post_id', 'parent_id']);
             $table->timestamps();
         });
     }

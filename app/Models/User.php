@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Interfaces\Likeable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -57,5 +58,35 @@ class User extends Authenticatable
     public function comments(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->is_admin;
+    }
+
+    public function like(Likeable $likeable)
+    {
+        if (!auth()->user()->isLiked($likeable))
+            $likeable->likes()->create([
+                'user_id' => auth()->id()
+            ]);
+    }
+
+    public function unlike(Likeable $likeable)
+    {
+        if (auth()->user()->isLiked($likeable))
+            $likeable->likes()
+                ->whereHas('user', fn($q) => $q->whereId($this->id))
+                ->delete();
+    }
+
+    public function isLiked(Likeable $likeable): bool
+    {
+        if (! $likeable->exists) {
+            return false;
+        }
+
+        return $likeable->likes()->whereHas('user', fn($q) =>  $q->whereId($this->id))->exists();
     }
 }

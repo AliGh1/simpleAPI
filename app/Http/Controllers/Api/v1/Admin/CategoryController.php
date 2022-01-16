@@ -41,7 +41,7 @@ class CategoryController extends Controller
             'name' => 'required|min:3|string'
         ]);
 
-        $category = Category::create([
+        Category::create([
             'name' => $request->name,
             'parent_id' => $request->parent_id ?? 0
         ]);

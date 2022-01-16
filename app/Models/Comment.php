@@ -12,7 +12,7 @@ class Comment extends Model implements Likeable
 {
     use HasFactory;
 
-    protected $fillable = [];
+    protected $fillable = ['parent_id', 'body', 'post_id'];
 
     public function user(): BelongsTo
     {
@@ -22,5 +22,10 @@ class Comment extends Model implements Likeable
     public function likes(): MorphMany
     {
         return $this->morphMany(Like::class, 'likeable');
+    }
+
+    public function post(): BelongsTo
+    {
+        return $this->belongsTo(Post::class);
     }
 }
