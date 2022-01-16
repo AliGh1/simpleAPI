@@ -1,14 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Api\v1;
+namespace App\Http\Controllers\Api\v1\Users;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use App\Http\Resources\v1\User as UserResource;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
+use function auth;
+use function bcrypt;
+use function response;
 
 class UserController extends Controller
 {

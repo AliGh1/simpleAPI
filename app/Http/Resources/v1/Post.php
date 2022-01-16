@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\v1;
 
-use App\Traits\HasImage;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class Post extends JsonResource
@@ -20,6 +19,8 @@ class Post extends JsonResource
 
     public function with($request)
     {
-        return ['status' => 'success'];
+        return [
+            'status' => 'success'
+        ];
     }
 }

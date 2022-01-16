@@ -27,7 +27,7 @@ class Post extends Model implements Likeable
 
     public function comments(): HasMany
     {
-        return $this->hasMany(Post::class);
+        return $this->hasMany(Comment::class);
     }
 
     public function categories(): BelongsToMany

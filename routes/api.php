@@ -14,26 +14,37 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// API version 1
 Route::prefix('v1')->namespace('App\Http\Controllers\Api\v1')->group(function (){
-    Route::post('/login', 'UserController@login');
-    Route::post('/register', 'UserController@register');
+    // Users Route
+    Route::namespace('Users')->name('v1.')->group(function (){
+        // Authentication Routes
+        Route::post('/login', 'UserController@login')->name('login');
+        Route::post('/register', 'UserController@register')->name('register');
+        Route::patch('/change-password', 'UserController@changePassword')
+            ->middleware('auth:api')->name('change-password');
 
-    Route::middleware('auth:api')->group(function (){
-        Route::patch('/change-password', 'UserController@changePassword');
-        Route::post('/like', 'LikeController@like');
-        Route::resource('comments', 'CommentController');
+        Route::resource('posts', 'PostController')
+            ->only('index', 'show');
 
-        Route::prefix('admin')->namespace('admin')->group(function (){
-            Route::resource('categories', 'CategoryController')
-                ->except(['create', 'edit']);
+        Route::resource('categories', 'CategoryController')
+            ->only(['index', 'show']);
 
-            Route::resource('posts', 'PostController')
-                ->except('create', 'edit');
+        Route::middleware('auth:api')->group(function (){
+            Route::post('/like', 'LikeController@like')->name('like');
+
+            Route::resource('comments', 'CommentController')
+                ->only(['store', 'update', 'destroy']);
         });
     });
 
+    // Admins Route
+    Route::middleware('auth:api')->namespace('admins')->prefix('admins')
+        ->name('v1.admins.')->group(function (){
+            Route::resource('posts', 'PostController')
+                ->except('create', 'edit', 'show');
+
+            Route::resource('categories', 'CategoryController')
+                ->only(['store', 'update', 'destroy']);
+        });
 });
-
-
-
-

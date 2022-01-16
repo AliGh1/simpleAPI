@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\v1\Admin;
+namespace App\Http\Controllers\Api\v1\Admins;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\CategoryCollection;
@@ -12,17 +12,6 @@ use Illuminate\Support\Facades\Response;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return CategoryCollection
-     */
-    public function index()
-    {
-        $categories = Category::paginate(15);
-        return new CategoryCollection($categories);
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -51,19 +40,6 @@ class CategoryController extends Controller
             'status' => 'success'
         ], \Symfony\Component\HttpFoundation\Response::HTTP_CREATED);
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param Category $category
-     * @return PostCollection
-     */
-    public function show(Category $category)
-    {
-        $posts = $category->posts()->paginate(15);
-        return New PostCollection($posts);
-    }
-
 
     /**
      * Update the specified resource in storage.

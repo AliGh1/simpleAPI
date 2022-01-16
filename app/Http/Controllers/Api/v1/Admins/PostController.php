@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\v1\Admin;
+namespace App\Http\Controllers\Api\v1\Admins;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\Post as PostResponse;
@@ -18,10 +18,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::paginate(15);
+        // Admin posts
+        $posts = auth()->user()->posts()->paginate(15);
         return new PostCollection($posts);
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -50,18 +50,6 @@ class PostController extends Controller
             'status' => 'success'
         ], \Symfony\Component\HttpFoundation\Response::HTTP_CREATED);
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param Post $post
-     * @return PostResponse
-     */
-    public function show(Post $post)
-    {
-        return new PostResponse($post);
-    }
-
 
     /**
      * Update the specified resource in storage.
