@@ -39,7 +39,7 @@ Route::prefix('v1')->namespace('App\Http\Controllers\Api\v1')->group(function ()
     });
 
     // Admins Route
-    Route::middleware('auth:api')->namespace('admins')->prefix('admins')
+    Route::middleware(['auth:api', 'auth.admin'])->namespace('admins')->prefix('admins')
         ->name('v1.admins.')->group(function (){
             Route::resource('posts', 'PostController')
                 ->except('create', 'edit', 'show');

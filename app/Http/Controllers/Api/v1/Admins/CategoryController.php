@@ -7,6 +7,7 @@ use App\Http\Resources\v1\CategoryCollection;
 use App\Http\Resources\v1\PostCollection;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Response;
 
 
@@ -65,7 +66,7 @@ class CategoryController extends Controller
             'name' => 'required|min:3|string'
         ]);
 
-        $category = $category->update([
+        $category->update([
             'name' => $request->name,
             'parent_id' => $request->parent_id ?? 0
         ]);

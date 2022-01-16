@@ -7,6 +7,7 @@ use App\Http\Resources\v1\Post as PostResponse;
 use App\Http\Resources\v1\PostCollection;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Response;
 
 class PostController extends Controller
@@ -60,6 +61,10 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        if (Gate::denies('update-post', $post)) {
+            return Response::forbidden();
+        }
+
         $validData = $request->validate([
             'title' => 'nullable|string',
             'image' => 'nullable|mimes:jpg,jpeg,png|max:2048',
@@ -99,6 +104,10 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        if (Gate::denies('delete-post', $post)) {
+            return Response::forbidden();
+        }
+
         if(\File::exists(public_path($post->image)))
             \File::delete(public_path($post->image));
 

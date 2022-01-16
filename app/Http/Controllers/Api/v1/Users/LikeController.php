@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1\Users;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LikeRequest;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Response;
 use function auth;
 use function class_basename;
@@ -17,6 +18,9 @@ class LikeController extends Controller
         $class_name = class_basename($likeable);
 
         if($user->isLiked($likeable)){
+            if (Gate::denies('delete-like', $likeable)) {
+                return Response::forbidden();
+            }
             $user->unlike($likeable);
             $likeable->update([
                 'likes_count' => --$likeable->likes_count
