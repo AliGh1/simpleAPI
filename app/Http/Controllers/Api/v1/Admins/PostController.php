@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Api\v1\Admins;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\v1\Post as PostResponse;
 use App\Http\Resources\v1\PostCollection;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Response;
+use Symfony\Component\HttpFoundation\Response;
 
 class PostController extends Controller
 {
@@ -46,10 +45,7 @@ class PostController extends Controller
         $post->categories()->sync($validData['categories']);
 
 
-        return Response::json([
-            'message' => 'Post Created Successfully',
-            'status' => 'success'
-        ], \Symfony\Component\HttpFoundation\Response::HTTP_CREATED);
+        return response()->success('Post Created Successfully', Response::HTTP_CREATED);
     }
 
     /**
@@ -61,8 +57,9 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        // Authorization
         if (Gate::denies('update-post', $post)) {
-            return Response::forbidden();
+            return response()->error('403 Forbidden', Response::HTTP_FORBIDDEN);
         }
 
         $validData = $request->validate([
@@ -90,10 +87,7 @@ class PostController extends Controller
             $post->categories()->sync($validData['categories']);
         }
 
-        return Response::json([
-            'message' => 'Post Updated Successfully',
-            'status' => 'success'
-        ], \Symfony\Component\HttpFoundation\Response::HTTP_OK);
+        return response()->success('Post Updated Successfully', Response::HTTP_OK);
     }
 
     /**
@@ -104,8 +98,9 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        // Authorization
         if (Gate::denies('delete-post', $post)) {
-            return Response::forbidden();
+            return response()->error('403 Forbidden', Response::HTTP_FORBIDDEN);
         }
 
         if(\File::exists(public_path($post->image)))
@@ -113,9 +108,6 @@ class PostController extends Controller
 
         $post->delete();
 
-        return Response::json([
-            'message' => 'Post Deleted Successfully',
-            'status' => 'success'
-        ], \Symfony\Component\HttpFoundation\Response::HTTP_OK);
+        return response()->success('Post Deleted Successfully', Response::HTTP_OK);
     }
 }

@@ -25,10 +25,7 @@ class UserController extends Controller
 
         // Check User auth
         if (! auth()->attempt($validData)){
-            return response([
-                'message' => 'Invalid email or password ',
-                'status' => 'error'
-            ],Response::HTTP_FORBIDDEN);
+            return response()->error('Invalid email or password', Response::HTTP_FORBIDDEN);
         }
 
 
@@ -68,10 +65,7 @@ class UserController extends Controller
 
         // Check User password
         if (! Hash::check($validData['password'], $request->user()->password)) {
-            return response([
-                'message' => 'Invalid password',
-                'status' => 'error'
-            ],Response::HTTP_FORBIDDEN);
+            return response()->error('Invalid password', Response::HTTP_FORBIDDEN);
         }
 
         // Update user password and renew api_token

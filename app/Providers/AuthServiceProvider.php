@@ -2,9 +2,7 @@
 
 namespace App\Providers;
 
-use App\Interfaces\Likeable;
 use App\Models\Comment;
-use App\Models\Like;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;

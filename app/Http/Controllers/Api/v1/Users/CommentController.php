@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Gate;
+use Symfony\Component\HttpFoundation\Response;
 use function auth;
 
 class CommentController extends Controller
@@ -28,24 +29,20 @@ class CommentController extends Controller
         // Check Parent_id is acceptable
         // check if parent_Id exist comment1.post_id == comment2.post_id
         if(isset($validData['parent_id'])){
-            if($validData['post_id'] != Comment::find($validData['parent_id'])->post_id){
-                return Response::json([
-                    'message' => "The comment parent can't be from another post",
-                    'status' => 'error'
-                ], \Symfony\Component\HttpFoundation\Response::HTTP_BAD_REQUEST);
+            if($validData['post_id'] != Comment::find($validData['parent_id'])->post_id) {
+                return response()->error("The comment parent can't be from another post", Response::HTTP_BAD_REQUEST);
             }
         }
 
-        auth()->user()->comments()->create($validData);
+        $comment = auth()->user()->comments()->create($validData);
+
+        // Update posts.comment_count
         $post = Post::find($validData['post_id']);
         $post->update([
             'comments_count' => ++$post->comments_count
         ]);
 
-        return Response::json([
-            'message' => 'Comment Created Successfully',
-            'status' => 'success'
-        ], \Symfony\Component\HttpFoundation\Response::HTTP_CREATED);
+        return response()->success('Comment Created Successfully', Response::HTTP_CREATED);
     }
 
     /**
@@ -57,16 +54,18 @@ class CommentController extends Controller
      */
     public function update(Request $request, Comment $comment)
     {
+        // Authorization
+        if (Gate::denies('update-comment', $comment)) {
+            return response()->error('403 Forbidden', Response::HTTP_FORBIDDEN);
+        }
+
         $validData = $request->validate([
             'body' => 'required|string',
         ]);
 
         $comment->update($validData);
 
-        return Response::json([
-            'message' => 'Comment Updated Successfully',
-            'status' => 'success'
-        ], \Symfony\Component\HttpFoundation\Response::HTTP_OK);
+        return response()->success('Comment Updated Successfully', Response::HTTP_OK);
     }
 
     /**
@@ -77,6 +76,12 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
+        // Authorization
+        if (Gate::denies('delete-comment', $comment)) {
+            return response()->error('403 Forbidden', Response::HTTP_FORBIDDEN);
+        }
+
+        // Update posts.comment_count
         $post = Post::find($comment->post_id);
         $post->update([
             'comments_count' => --$post->comments_count
@@ -84,9 +89,6 @@ class CommentController extends Controller
 
         $comment->delete();
 
-        return Response::json([
-            'message' => 'Comment Deleted Successfully',
-            'status' => 'success'
-        ], \Symfony\Component\HttpFoundation\Response::HTTP_OK);
+        return response()->success('Comment Deleted Successfully', Response::HTTP_OK);
     }
 }

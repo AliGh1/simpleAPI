@@ -3,12 +3,9 @@
 namespace App\Http\Controllers\Api\v1\Admins;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\v1\CategoryCollection;
-use App\Http\Resources\v1\PostCollection;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Response;
+use Symfony\Component\HttpFoundation\Response;
 
 
 class CategoryController extends Controller
@@ -36,10 +33,7 @@ class CategoryController extends Controller
             'parent_id' => $request->parent_id ?? 0
         ]);
 
-        return Response::json([
-            'message' => 'Category Created Successfully',
-            'status' => 'success'
-        ], \Symfony\Component\HttpFoundation\Response::HTTP_CREATED);
+        return response()->success('Category Created Successfully', Response::HTTP_CREATED);
     }
 
     /**
@@ -71,10 +65,7 @@ class CategoryController extends Controller
             'parent_id' => $request->parent_id ?? 0
         ]);
 
-        return Response::json([
-            'message' => 'Category Updated Successfully',
-            'status' => 'success'
-        ], \Symfony\Component\HttpFoundation\Response::HTTP_OK);
+        return response()->success('Category Updated Successfully', Response::HTTP_OK);
     }
 
     /**
@@ -87,9 +78,6 @@ class CategoryController extends Controller
     {
         $category->delete();
 
-        return Response::json([
-            'message' => 'Category Deleted Successfully',
-            'status' => 'success'
-        ], \Symfony\Component\HttpFoundation\Response::HTTP_OK);
+        return response()->success('Category Deleted Successfully', Response::HTTP_OK);
     }
 }

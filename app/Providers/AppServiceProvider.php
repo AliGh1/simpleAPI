@@ -24,11 +24,18 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Response::macro('forbidden', function () {
+        Response::macro('error', function ($message, $responseCode) {
             return Response::json([
-                'message' => '403 Forbidden',
+                'message' => $message,
                 'status' => 'error'
-            ],\Symfony\Component\HttpFoundation\Response::HTTP_FORBIDDEN);
+            ],$responseCode);
+        });
+
+        Response::macro('success', function ($message, $responseCode) {
+            return Response::json([
+                'message' => $message,
+                'status' => 'success'
+            ],$responseCode);
         });
     }
 }

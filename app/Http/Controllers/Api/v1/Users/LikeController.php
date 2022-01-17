@@ -4,8 +4,7 @@ namespace App\Http\Controllers\Api\v1\Users;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LikeRequest;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Response;
+use Symfony\Component\HttpFoundation\Response;
 use function auth;
 use function class_basename;
 
@@ -23,20 +22,15 @@ class LikeController extends Controller
                 'likes_count' => --$likeable->likes_count
             ]);
 
-            return Response::json([
-                'message' => "$class_name Unliked Successfully",
-                'status' => 'success'
-            ], \Symfony\Component\HttpFoundation\Response::HTTP_OK);
+            return response()->success("$class_name unliked Successfully", Response::HTTP_OK);
+
         }else{
             $user->like($likeable);
             $likeable->update([
                 'likes_count' => ++$likeable->likes_count
             ]);
 
-            return Response::json([
-                'message' => "$class_name liked Successfully",
-                'status' => 'success'
-            ], \Symfony\Component\HttpFoundation\Response::HTTP_OK);
+            return response()->success("$class_name liked Successfully", Response::HTTP_OK);
         }
     }
 }
