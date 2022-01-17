@@ -6,6 +6,7 @@ namespace App\Exceptions;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\UnauthorizedException;
 use Symfony\Component\HttpFoundation\Response;
@@ -62,6 +63,12 @@ class Handler extends ExceptionHandler
         $this->renderable(function (AccessDeniedHttpException $e, $request) {
             if ($request->is('api/*') || $request->expectsJson()) {
                 return response()->error('403 Forbidden', Response::HTTP_FORBIDDEN);
+            }
+        });
+
+        $this->renderable(function (QueryException $e, $request) {
+            if ($request->is('api/*') || $request->expectsJson()) {
+                return response()->error($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
             }
         });
     }

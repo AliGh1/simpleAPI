@@ -9,6 +9,14 @@ use JsonSerializable;
 
 class User extends JsonResource
 {
+    private string $token;
+
+    public function __construct($resource, $token)
+    {
+        $this->token = $token;
+        parent::__construct($resource);
+    }
+
     /**
      * Transform the resource into an array.
      *
@@ -20,7 +28,7 @@ class User extends JsonResource
         return [
             'name' => $this->name,
             'email' => $this->email,
-            'api_token' => $this->api_token
+            'token' => $this->token
         ];
     }
 

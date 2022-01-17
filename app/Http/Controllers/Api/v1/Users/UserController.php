@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Api\v1\Users;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\v1\Users\ChangePasswordRequest;
+use App\Http\Requests\Api\v1\Users\LoginRequest;
+use App\Http\Requests\Api\v1\Users\RegisterRequest;
 use App\Http\Resources\v1\User as UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -15,53 +18,43 @@ use function response;
 
 class UserController extends Controller
 {
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        // Validation data
-        $validData = $this->validate($request, [
-            'email' => 'required|email|exists:users',
-            'password' => 'required'
-        ]);
+        $validData = $request->all();
 
         // Check User auth
         if (! auth()->attempt($validData)){
             return response()->error('Invalid email or password', Response::HTTP_FORBIDDEN);
         }
 
+        $token = $request->user()->createToken('MyAuthApp')->plainTextToken;
 
-        return new UserResource(auth()->user());
+        return new UserResource(auth()->user(), $token);
     }
 
-    public function register(Request $request)
+    public function register(RegisterRequest $request)
     {
-        // Validation data
-        $validData = $this->validate($request, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6',
-        ]);
+        $validData = $request->all();
 
         // user create
         $user = User::create([
             'name' => $validData['name'],
             'email' => $validData['email'],
             'password' => bcrypt($validData['password']),
-            'api_token' => Str::random(120)
         ]);
 
         auth()->login($user);
 
+        $token = $request->user()->createToken('MyAuthApp')->plainTextToken;
+
         // response
-        return new UserResource($user);
+        return new UserResource($user, $token);
     }
 
-    public function changePassword(Request $request)
+    public function changePassword(ChangePasswordRequest $request)
     {
         // Validation data
-        $validData = $this->validate($request, [
-            'password' => 'required|string',
-            'new_password' => 'required|string|min:6'
-        ]);
+        $validData = $request->all();
 
         // Check User password
         if (! Hash::check($validData['password'], $request->user()->password)) {
@@ -71,10 +64,14 @@ class UserController extends Controller
         // Update user password and renew api_token
         auth()->user()->update([
             'password' => bcrypt($validData['new_password']),
-            'api_token' => Str::random(120)
         ]);
 
+        // Revoke all tokens...
+        auth()->user()->tokens()->delete();
+
+        $token = $request->user()->createToken('MyAuthApp')->plainTextToken;
+
         // response
-        return new UserResource(auth()->user());
+        return new UserResource(auth()->user(), $token);
     }
 }
