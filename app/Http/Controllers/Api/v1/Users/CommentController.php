@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
 use function auth;
@@ -34,13 +35,16 @@ class CommentController extends Controller
             }
         }
 
-        $comment = auth()->user()->comments()->create($validData);
+        DB::transaction(function () use ($validData) {
+            $comment = auth()->user()->comments()->create($validData);
 
-        // Update posts.comment_count
-        $post = Post::find($validData['post_id']);
-        $post->update([
-            'comments_count' => ++$post->comments_count
-        ]);
+            // Update posts.comment_count
+            $post = $comment->post()->firstOrFail();
+            $post->update([
+                'comments_count' => ++$post->comments_count
+            ]);
+        });
+
 
         return response()->success('Comment Created Successfully', Response::HTTP_CREATED);
     }
@@ -81,13 +85,15 @@ class CommentController extends Controller
             return response()->error('403 Forbidden', Response::HTTP_FORBIDDEN);
         }
 
-        // Update posts.comment_count
-        $post = Post::find($comment->post_id);
-        $post->update([
-            'comments_count' => --$post->comments_count
-        ]);
+        DB::transaction(function () use ($comment) {
+            // Update posts.comment_count
+            $post = $comment->post()->firstOrFail();
+            $post->update([
+                'comments_count' => --$post->comments_count
+            ]);
 
-        $comment->delete();
+            $comment->delete();
+        });
 
         return response()->success('Comment Deleted Successfully', Response::HTTP_OK);
     }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\PostCollection;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -41,9 +42,10 @@ class PostController extends Controller
         //Upload and Resize Image
         $validData = Post::uploadImage($request,$validData,600,400);
 
-        $post = auth()->user()->posts()->create($validData);
-        $post->categories()->sync($validData['categories']);
-
+        DB::transaction(function () use ($validData) {
+            $post = auth()->user()->posts()->create($validData);
+            $post->categories()->sync($validData['categories']);
+        });
 
         return response()->success('Post Created Successfully', Response::HTTP_CREATED);
     }
@@ -79,13 +81,15 @@ class PostController extends Controller
             //Upload and Resize Image
             $validData = Post::uploadImage($request,$validData,600,400);
         }
+        DB::transaction(function () use ($post, $validData) {
+            $post->update($validData);
 
-        $post->update($validData);
+            if(isset($validData['categories'])){
+                // check if there are categories
+                $post->categories()->sync($validData['categories']);
+            }
+        });
 
-        if(isset($validData['categories'])){
-            // check if there are categories
-            $post->categories()->sync($validData['categories']);
-        }
 
         return response()->success('Post Updated Successfully', Response::HTTP_OK);
     }
