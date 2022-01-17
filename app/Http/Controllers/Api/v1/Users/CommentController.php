@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api\v1\Users;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\v1\Users\CreateCommentRequest;
+use App\Http\Requests\Api\v1\Users\UpdateCommentRequest;
 use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -19,21 +21,14 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(CreateCommentRequest $request)
     {
-        $validData = $request->validate([
-            'body' => 'required|string',
-            'parent_id' => 'nullable|int|exists:comments,id',
-            'post_id' => 'required|int|exists:posts,id',
-        ]);
-
         // Check Parent_id is acceptable
         // check if parent_Id exist comment1.post_id == comment2.post_id
-        if(isset($validData['parent_id'])){
-            if($validData['post_id'] != Comment::find($validData['parent_id'])->post_id) {
-                return response()->error("The comment parent can't be from another post", Response::HTTP_BAD_REQUEST);
-            }
-        }
+        if (! $request->isSafeParentId())
+            return response()->error("The comment parent can't be from another post", Response::HTTP_BAD_REQUEST);
+
+        $validData = $request->all();
 
         DB::transaction(function () use ($validData) {
             $comment = auth()->user()->comments()->create($validData);
@@ -52,22 +47,13 @@ class CommentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param UpdateCommentRequest $request
+     * @param Comment $comment
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, Comment $comment)
+    public function update(UpdateCommentRequest $request, Comment $comment)
     {
-        // Authorization
-        if (Gate::denies('update-comment', $comment)) {
-            return response()->error('403 Forbidden', Response::HTTP_FORBIDDEN);
-        }
-
-        $validData = $request->validate([
-            'body' => 'required|string',
-        ]);
-
-        $comment->update($validData);
+        $comment->update($request->all());
 
         return response()->success('Comment Updated Successfully', Response::HTTP_OK);
     }

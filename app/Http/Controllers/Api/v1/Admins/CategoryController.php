@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1\Admins;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\v1\Admins\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,18 +17,8 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        if($request->parent_id) {
-            $request->validate([
-                'parent_id' => 'exists:categories,id'
-            ]);
-        }
-
-        $request->validate([
-            'name' => 'required|min:3|string'
-        ]);
-
         Category::create([
             'name' => $request->name,
             'parent_id' => $request->parent_id ?? 0
@@ -43,22 +34,10 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, Category $category)
+    public function update(CategoryRequest $request, Category $category)
     {
-        //check parent_id
-        if($request->parent_id) {
-            $request->validate([
-                'parent_id' => 'exists:categories,id'
-            ]);
-        }
-
         //Avoid becoming your own father
-        if ($request->parent_id == $category->id)
-            $request->parent_id = 0;
-
-        $request->validate([
-            'name' => 'required|min:3|string'
-        ]);
+        $request->safeParentId($category);
 
         $category->update([
             'name' => $request->name,

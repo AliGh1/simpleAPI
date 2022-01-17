@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\v1\Users;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LikeRequest;
+use App\Http\Requests\Api\v1\Users\LikeRequest;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 use function auth;

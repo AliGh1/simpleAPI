@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Api\v1\Admins;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\v1\Admins\CreatePostRequest;
+use App\Http\Requests\Api\v1\Admins\UpdatePostRequest;
 use App\Http\Resources\v1\PostCollection;
 use App\Models\Post;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,17 +31,12 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(CreatePostRequest $request)
     {
-        $validData = $request->validate([
-            'title' => 'required|string',
-            'image' => 'required|mimes:jpg,jpeg,png|max:2048',
-            'body' => 'required|string',
-            'categories' => 'required',
-        ]);
+        $validData = $request->all();
 
         //Upload and Resize Image
-        $validData = Post::uploadImage($request,$validData,600,400);
+        $validData = Post::uploadImage($request, $validData,600,400);
 
         DB::transaction(function () use ($validData) {
             $post = auth()->user()->posts()->create($validData);
@@ -57,19 +53,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, Post $post)
+    public function update(UpdatePostRequest $request, Post $post)
     {
-        // Authorization
-        if (Gate::denies('update-post', $post)) {
-            return response()->error('403 Forbidden', Response::HTTP_FORBIDDEN);
-        }
-
-        $validData = $request->validate([
-            'title' => 'nullable|string',
-            'image' => 'nullable|mimes:jpg,jpeg,png|max:2048',
-            'body' => 'nullable|string',
-            'categories' => 'nullable',
-        ]);
+        $validData = $request->all();
 
         // Check if there are new image
         if(isset($validData['image'])){

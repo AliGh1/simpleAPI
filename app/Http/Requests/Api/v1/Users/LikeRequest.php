@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Api\v1\Users;
 
 use App\Interfaces\Likeable;
 use Illuminate\Database\Eloquent\Model;
