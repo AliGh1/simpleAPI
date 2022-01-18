@@ -11,6 +11,10 @@ class User extends JsonResource
 {
     private string $token;
 
+    /**
+     * @param $resource
+     * @param $token
+     */
     public function __construct($resource, $token)
     {
         $this->token = $token;
@@ -23,7 +27,7 @@ class User extends JsonResource
      * @param  Request  $request
      * @return array
      */
-    public function toArray($request)
+    public function toArray($request): array
     {
         return [
             'name' => $this->name,
@@ -32,7 +36,7 @@ class User extends JsonResource
         ];
     }
 
-    public function with($request)
+    public function with($request): array
     {
         return ['status' => 'success'];
     }

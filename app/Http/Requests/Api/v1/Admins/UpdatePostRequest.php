@@ -12,7 +12,7 @@ class UpdatePostRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return Gate::allows('update-post', $this->route('post'));
     }
@@ -22,7 +22,7 @@ class UpdatePostRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'title' => 'nullable|string',

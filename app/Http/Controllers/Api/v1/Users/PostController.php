@@ -14,7 +14,7 @@ class PostController extends Controller
      *
      * @return PostCollection
      */
-    public function index()
+    public function index(): PostCollection
     {
         $posts = Post::paginate(15);
         return new PostCollection($posts);
@@ -26,8 +26,10 @@ class PostController extends Controller
      * @param Post $post
      * @return PostResponse
      */
-    public function show(Post $post)
+    public function show(Post $post): PostResponse
     {
-        return new PostResponse($post->load('comments'));
+        return new PostResponse($post->load(['categories', 'comments' => function ($query){
+            $query->where('parent_id', 0)->with('children');
+        }]));
     }
 }

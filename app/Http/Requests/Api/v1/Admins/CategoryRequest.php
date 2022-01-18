@@ -11,7 +11,7 @@ class CategoryRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,7 +21,7 @@ class CategoryRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'parent_id' => 'nullable|exists:categories,id',
@@ -29,7 +29,13 @@ class CategoryRequest extends FormRequest
         ];
     }
 
-    //Avoid becoming your own father
+
+    /**
+     * Avoid becoming your own father
+     *
+     * @param $category
+     * @return void
+     */
     public function safeParentId($category){
         if ($this->parent_id == $category->id)
             $this->parent_id = 0;

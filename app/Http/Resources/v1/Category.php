@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\v1;
 
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class Category extends JsonResource
@@ -9,19 +10,19 @@ class Category extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     * @param  Request  $request
+     * @return array
      */
-    public function toArray($request)
+    public function toArray($request): array
     {
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'parent_id' => $this->parent_id,
+            'children' => new CategoryCollection($this->whenLoaded('children'))
         ];
     }
 
-    public function with($request)
+    public function with($request): array
     {
         return ['status' => 'success'];
     }

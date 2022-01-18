@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1\Admins;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\v1\Admins\CategoryRequest;
 use App\Models\Category;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -14,10 +15,10 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
+     * @param CategoryRequest $request
+     * @return JsonResponse
      */
-    public function store(CategoryRequest $request)
+    public function store(CategoryRequest $request): JsonResponse
     {
         Category::create([
             'name' => $request->name,
@@ -30,11 +31,11 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\JsonResponse
+     * @param CategoryRequest $request
+     * @param Category $category
+     * @return JsonResponse
      */
-    public function update(CategoryRequest $request, Category $category)
+    public function update(CategoryRequest $request, Category $category): JsonResponse
     {
         //Avoid becoming your own father
         $request->safeParentId($category);
@@ -50,10 +51,10 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\JsonResponse
+     * @param Category $category
+     * @return JsonResponse
      */
-    public function destroy(Category $category)
+    public function destroy(Category $category): JsonResponse
     {
         $category->delete();
 

@@ -12,7 +12,7 @@ class UpdateCommentRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return Gate::allows('update-comment', $this->route('comment'));
     }
@@ -22,7 +22,7 @@ class UpdateCommentRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'body' => 'required|string'

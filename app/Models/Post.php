@@ -10,9 +10,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Http\Request;
 
 /**
- * @method static uploadImage(\Illuminate\Http\Request $request, array $validData, int $width, int $height)
+ * @method static uploadImage(Request $request, array $validData, int $width, int $height)
  */
 class Post extends Model implements Likeable
 {

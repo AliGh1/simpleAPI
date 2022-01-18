@@ -7,6 +7,8 @@ use App\Http\Requests\Api\v1\Admins\CreatePostRequest;
 use App\Http\Requests\Api\v1\Admins\UpdatePostRequest;
 use App\Http\Resources\v1\PostCollection;
 use App\Models\Post;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,20 +20,20 @@ class PostController extends Controller
      *
      * @return PostCollection
      */
-    public function index()
+    public function index(): PostCollection
     {
         // Admin posts
-        $posts = auth()->user()->posts()->paginate(15);
+        $posts = auth()->user()->posts()->with('categories')->paginate(15);
         return new PostCollection($posts);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
+     * @param CreatePostRequest $request
+     * @return JsonResponse
      */
-    public function store(CreatePostRequest $request)
+    public function store(CreatePostRequest $request): JsonResponse
     {
         $validData = $request->all();
 
@@ -49,11 +51,11 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\JsonResponse
+     * @param UpdatePostRequest $request
+     * @param Post $post
+     * @return JsonResponse
      */
-    public function update(UpdatePostRequest $request, Post $post)
+    public function update(UpdatePostRequest $request, Post $post): JsonResponse
     {
         $validData = $request->all();
 
@@ -84,9 +86,9 @@ class PostController extends Controller
      * Remove the specified resource from storage.
      *
      * @param Post $post
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function destroy(Post $post)
+    public function destroy(Post $post): JsonResponse
     {
         // Authorization
         if (Gate::denies('delete-post', $post)) {

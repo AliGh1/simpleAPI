@@ -4,7 +4,6 @@ namespace App\Http\Requests\Api\v1\Users;
 
 use App\Models\Comment;
 use Illuminate\Foundation\Http\FormRequest;
-use Symfony\Component\HttpFoundation\Response;
 
 class CreateCommentRequest extends FormRequest
 {
@@ -13,7 +12,7 @@ class CreateCommentRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -23,7 +22,7 @@ class CreateCommentRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'body' => 'required|string',
@@ -32,8 +31,12 @@ class CreateCommentRequest extends FormRequest
         ];
     }
 
-    // Check Parent_id is acceptable
-    // check if parent_Id exist comment1.post_id == comment2.post_id
+    /**
+     * Check Parent_id is acceptable
+     * Check if parent_Id exist comment1.post_id == comment2.post_id
+     *
+     * @return bool
+     */
     public function isSafeParentId(): bool
     {
         if(isset($this['parent_id'])){

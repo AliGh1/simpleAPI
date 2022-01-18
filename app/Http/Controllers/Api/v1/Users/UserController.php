@@ -8,9 +8,7 @@ use App\Http\Requests\Api\v1\Users\LoginRequest;
 use App\Http\Requests\Api\v1\Users\RegisterRequest;
 use App\Http\Resources\v1\User as UserResource;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 use function auth;
 use function bcrypt;
@@ -18,7 +16,11 @@ use function response;
 
 class UserController extends Controller
 {
-    public function login(LoginRequest $request)
+    /**
+     * @param LoginRequest $request
+     * @return UserResource
+     */
+    public function login(LoginRequest $request): UserResource
     {
         $validData = $request->all();
 
@@ -32,7 +34,11 @@ class UserController extends Controller
         return new UserResource(auth()->user(), $token);
     }
 
-    public function register(RegisterRequest $request)
+    /**
+     * @param RegisterRequest $request
+     * @return UserResource
+     */
+    public function register(RegisterRequest $request): UserResource
     {
         $validData = $request->all();
 
@@ -51,7 +57,11 @@ class UserController extends Controller
         return new UserResource($user, $token);
     }
 
-    public function changePassword(ChangePasswordRequest $request)
+    /**
+     * @param ChangePasswordRequest $request
+     * @return UserResource
+     */
+    public function changePassword(ChangePasswordRequest $request): UserResource
     {
         // Validation data
         $validData = $request->all();

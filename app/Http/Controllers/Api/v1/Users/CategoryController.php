@@ -14,9 +14,11 @@ class CategoryController extends Controller
      *
      * @return CategoryCollection
      */
-    public function index()
+    public function index(): CategoryCollection
     {
-        $categories = Category::paginate(15);
+        $categories = Category::with('children')
+            ->where('parent_id', 0)->paginate(15);
+
         return new CategoryCollection($categories);
     }
 
@@ -26,7 +28,7 @@ class CategoryController extends Controller
      * @param Category $category
      * @return PostCollection
      */
-    public function show(Category $category)
+    public function show(Category $category): PostCollection
     {
         $posts = $category->posts()->paginate(15);
         return New PostCollection($posts);

@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Interfaces\Likeable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -63,6 +62,7 @@ class User extends Authenticatable
         return $this->is_admin;
     }
 
+    // like a Likeable
     public function like(Likeable $likeable)
     {
         if (!auth()->user()->isLiked($likeable))
@@ -71,6 +71,7 @@ class User extends Authenticatable
             ]);
     }
 
+    // unlike a Likeable
     public function unlike(Likeable $likeable)
     {
         if (auth()->user()->isLiked($likeable))
@@ -79,6 +80,7 @@ class User extends Authenticatable
                 ->delete();
     }
 
+    // Check is liked Likeable
     public function isLiked(Likeable $likeable): bool
     {
         if (! $likeable->exists) {

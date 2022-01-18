@@ -14,6 +14,16 @@ class Comment extends Model implements Likeable
 
     protected $fillable = ['parent_id', 'body', 'post_id'];
 
+    public function child(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Comment::class , 'parent_id' , 'id');
+    }
+
+    public function children(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->child()->with('children');
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

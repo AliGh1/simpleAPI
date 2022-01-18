@@ -61,6 +61,9 @@ class LikeRequest extends FormRequest
         ];
     }
 
+    /**
+     * @return Likeable
+     */
     public function likeable(): Likeable
     {
         $class = $this->input('likeable_type');

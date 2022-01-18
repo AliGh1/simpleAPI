@@ -7,6 +7,7 @@ use App\Http\Requests\Api\v1\Users\CreateCommentRequest;
 use App\Http\Requests\Api\v1\Users\UpdateCommentRequest;
 use App\Models\Comment;
 use App\Models\Post;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
@@ -18,10 +19,10 @@ class CommentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
+     * @param CreateCommentRequest $request
+     * @return JsonResponse
      */
-    public function store(CreateCommentRequest $request)
+    public function store(CreateCommentRequest $request): JsonResponse
     {
         // Check Parent_id is acceptable
         // check if parent_Id exist comment1.post_id == comment2.post_id
@@ -49,9 +50,9 @@ class CommentController extends Controller
      *
      * @param UpdateCommentRequest $request
      * @param Comment $comment
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function update(UpdateCommentRequest $request, Comment $comment)
+    public function update(UpdateCommentRequest $request, Comment $comment): JsonResponse
     {
         $comment->update($request->all());
 
@@ -61,8 +62,8 @@ class CommentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\JsonResponse
+     * @param Comment $comment
+     * @return JsonResponse
      */
     public function destroy(Comment $comment)
     {
