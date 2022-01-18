@@ -31,7 +31,7 @@ class UserController extends Controller
 
         $token = $request->user()->createToken('MyAuthApp')->plainTextToken;
 
-        return new UserResource(auth()->user(), $token);
+        return new UserResource(auth()->user(), $token, 'You have logged in successfully');
     }
 
     /**
@@ -54,7 +54,7 @@ class UserController extends Controller
         $token = $request->user()->createToken('MyAuthApp')->plainTextToken;
 
         // response
-        return new UserResource($user, $token);
+        return new UserResource($user, $token, 'You have successfully registered');
     }
 
     /**
@@ -82,6 +82,6 @@ class UserController extends Controller
         $token = $request->user()->createToken('MyAuthApp')->plainTextToken;
 
         // response
-        return new UserResource(auth()->user(), $token);
+        return new UserResource(auth()->user(), $token,'Password changed successfully');
     }
 }

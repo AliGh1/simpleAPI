@@ -2,22 +2,24 @@
 
 namespace App\Http\Resources\v1;
 
-use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use JsonSerializable;
 
 class User extends JsonResource
 {
     private string $token;
+    private string $message;
 
     /**
      * @param $resource
-     * @param $token
+     * @param string $token
+     * @param string $message
      */
-    public function __construct($resource, $token)
+    public function __construct($resource, string $token, string $message = 'Done')
     {
         $this->token = $token;
+        $this->message = $message;
+
         parent::__construct($resource);
     }
 
@@ -38,6 +40,9 @@ class User extends JsonResource
 
     public function with($request): array
     {
-        return ['status' => 'success'];
+        return [
+            'status' => 'success',
+            'message' => $this->message,
+        ];
     }
 }
