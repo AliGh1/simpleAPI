@@ -2,6 +2,7 @@
 	"info": {
 		"_postman_id": "69a898a4-a636-4217-b11b-e2b2dd2a2b07",
 		"name": "simpleAPI",
+		"description": "This is a simple API project",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -28,13 +29,14 @@
 										{
 											"key": "name",
 											"value": "Books",
+											"description": "required|min:3|string",
 											"type": "text"
 										},
 										{
 											"key": "parent_id",
 											"value": "1",
-											"type": "text",
-											"disabled": true
+											"description": "nullable|exists:categories,id",
+											"type": "text"
 										}
 									]
 								},
@@ -50,7 +52,8 @@
 										"admins",
 										"categories"
 									]
-								}
+								},
+								"description": "Create categories route"
 							},
 							"response": [
 								{
@@ -70,13 +73,14 @@
 												{
 													"key": "name",
 													"value": "Books",
+													"description": "required|min:3|string",
 													"type": "text"
 												},
 												{
 													"key": "parent_id",
 													"value": "1",
-													"type": "text",
-													"disabled": true
+													"description": "nullable|exists:categories,id",
+													"type": "text"
 												}
 											]
 										},
@@ -104,11 +108,11 @@
 										},
 										{
 											"key": "Date",
-											"value": "Tue, 18 Jan 2022 11:34:29 GMT"
+											"value": "Tue, 18 Jan 2022 13:26:26 GMT"
 										},
 										{
 											"key": "Date",
-											"value": "Tue, 18 Jan 2022 11:34:29 GMT"
+											"value": "Tue, 18 Jan 2022 13:26:26 GMT"
 										},
 										{
 											"key": "Connection",
@@ -132,7 +136,7 @@
 										},
 										{
 											"key": "X-RateLimit-Remaining",
-											"value": "58"
+											"value": "59"
 										},
 										{
 											"key": "Access-Control-Allow-Origin",
@@ -166,11 +170,13 @@
 										{
 											"key": "name",
 											"value": "Lights",
+											"description": "required|min:3|string",
 											"type": "text"
 										},
 										{
 											"key": "parent_id",
 											"value": "2",
+											"description": "nullable|exists:categories,id",
 											"type": "text"
 										}
 									]
@@ -188,7 +194,8 @@
 										"categories",
 										"1"
 									]
-								}
+								},
+								"description": "Update categories route"
 							},
 							"response": [
 								{
@@ -213,11 +220,13 @@
 												{
 													"key": "name",
 													"value": "Lights",
+													"description": "required|min:3|string",
 													"type": "text"
 												},
 												{
 													"key": "parent_id",
 													"value": "2",
+													"description": "nullable|exists:categories,id",
 													"type": "text"
 												}
 											]
@@ -247,11 +256,11 @@
 										},
 										{
 											"key": "Date",
-											"value": "Tue, 18 Jan 2022 11:36:07 GMT"
+											"value": "Tue, 18 Jan 2022 13:28:07 GMT"
 										},
 										{
 											"key": "Date",
-											"value": "Tue, 18 Jan 2022 11:36:07 GMT"
+											"value": "Tue, 18 Jan 2022 13:28:07 GMT"
 										},
 										{
 											"key": "Connection",
@@ -275,7 +284,7 @@
 										},
 										{
 											"key": "X-RateLimit-Remaining",
-											"value": "53"
+											"value": "59"
 										},
 										{
 											"key": "Access-Control-Allow-Origin",
@@ -321,7 +330,8 @@
 										"categories",
 										"3"
 									]
-								}
+								},
+								"description": "Delete categories route"
 							},
 							"response": [
 								{
@@ -410,7 +420,8 @@
 								}
 							]
 						}
-					]
+					],
+					"description": "In these routes, the admin creates, edits and deletes the category"
 				},
 				{
 					"name": "Posts",
@@ -438,7 +449,8 @@
 										"admins",
 										"posts"
 									]
-								}
+								},
+								"description": "Returns logged admin posts"
 							},
 							"response": [
 								{
@@ -533,21 +545,25 @@
 										{
 											"key": "title",
 											"value": "post2",
+											"description": "required|string",
 											"type": "text"
 										},
 										{
 											"key": "image",
+											"description": "required|mimes:jpg,jpeg,png|max:2048",
 											"type": "file",
-											"src": "/C:/Users/aliag/Pictures/agniasq3pwkf.png"
+											"src": "/C:/Users/aliag/Pictures/13pro2.jpg"
 										},
 										{
 											"key": "body",
 											"value": "this is post 2",
+											"description": "required|string",
 											"type": "text"
 										},
 										{
 											"key": "categories[0]",
 											"value": "1",
+											"description": "required",
 											"type": "text"
 										},
 										{
@@ -569,7 +585,8 @@
 										"admins",
 										"posts"
 									]
-								}
+								},
+								"description": "Create posts route"
 							},
 							"response": [
 								{
@@ -588,22 +605,26 @@
 											"formdata": [
 												{
 													"key": "title",
-													"value": "post1",
+													"value": "post2",
+													"description": "required|string",
 													"type": "text"
 												},
 												{
 													"key": "image",
+													"description": "required|mimes:jpg,jpeg,png|max:2048",
 													"type": "file",
-													"src": "/C:/Users/aliag/Pictures/agniasq3pwkf.png"
+													"src": "/C:/Users/aliag/Pictures/13pro2.jpg"
 												},
 												{
 													"key": "body",
-													"value": "this is post1",
+													"value": "this is post 2",
+													"description": "required|string",
 													"type": "text"
 												},
 												{
 													"key": "categories[0]",
 													"value": "1",
+													"description": "required",
 													"type": "text"
 												},
 												{
@@ -637,11 +658,11 @@
 										},
 										{
 											"key": "Date",
-											"value": "Tue, 18 Jan 2022 11:37:52 GMT"
+											"value": "Tue, 18 Jan 2022 13:31:05 GMT"
 										},
 										{
 											"key": "Date",
-											"value": "Tue, 18 Jan 2022 11:37:52 GMT"
+											"value": "Tue, 18 Jan 2022 13:31:05 GMT"
 										},
 										{
 											"key": "Connection",
@@ -665,7 +686,7 @@
 										},
 										{
 											"key": "X-RateLimit-Remaining",
-											"value": "59"
+											"value": "58"
 										},
 										{
 											"key": "Access-Control-Allow-Origin",
@@ -699,15 +720,18 @@
 										{
 											"key": "title",
 											"value": "upated post",
+											"description": "nullable|string",
 											"type": "text"
 										},
 										{
 											"key": "body",
 											"value": "this is updated post",
+											"description": "nullable|string",
 											"type": "text"
 										},
 										{
 											"key": "image",
+											"description": "nullable|mimes:jpg,jpeg,png|max:2048",
 											"type": "file",
 											"src": [],
 											"disabled": true
@@ -715,12 +739,13 @@
 										{
 											"key": "categories[0]",
 											"value": "2",
+											"description": "nullable",
 											"type": "text"
 										}
 									]
 								},
 								"url": {
-									"raw": "localhost:8000/api/v1/admins/posts/7",
+									"raw": "localhost:8000/api/v1/admins/posts/10",
 									"host": [
 										"localhost"
 									],
@@ -730,9 +755,10 @@
 										"v1",
 										"admins",
 										"posts",
-										"7"
+										"10"
 									]
-								}
+								},
+								"description": "Update posts route"
 							},
 							"response": [
 								{
@@ -757,15 +783,18 @@
 												{
 													"key": "title",
 													"value": "upated post",
+													"description": "nullable|string",
 													"type": "text"
 												},
 												{
 													"key": "body",
 													"value": "this is updated post",
+													"description": "nullable|string",
 													"type": "text"
 												},
 												{
 													"key": "image",
+													"description": "nullable|mimes:jpg,jpeg,png|max:2048",
 													"type": "file",
 													"src": [],
 													"disabled": true
@@ -773,12 +802,13 @@
 												{
 													"key": "categories[0]",
 													"value": "2",
+													"description": "nullable",
 													"type": "text"
 												}
 											]
 										},
 										"url": {
-											"raw": "localhost:8000/api/v1/admins/posts/7",
+											"raw": "localhost:8000/api/v1/admins/posts/10",
 											"host": [
 												"localhost"
 											],
@@ -788,7 +818,7 @@
 												"v1",
 												"admins",
 												"posts",
-												"7"
+												"10"
 											]
 										}
 									},
@@ -802,11 +832,11 @@
 										},
 										{
 											"key": "Date",
-											"value": "Tue, 18 Jan 2022 11:38:36 GMT"
+											"value": "Tue, 18 Jan 2022 13:34:28 GMT"
 										},
 										{
 											"key": "Date",
-											"value": "Tue, 18 Jan 2022 11:38:36 GMT"
+											"value": "Tue, 18 Jan 2022 13:34:28 GMT"
 										},
 										{
 											"key": "Connection",
@@ -830,7 +860,7 @@
 										},
 										{
 											"key": "X-RateLimit-Remaining",
-											"value": "58"
+											"value": "59"
 										},
 										{
 											"key": "Access-Control-Allow-Origin",
@@ -876,7 +906,8 @@
 										"posts",
 										"7"
 									]
-								}
+								},
+								"description": "Delete posts route"
 							},
 							"response": [
 								{
@@ -965,9 +996,11 @@
 								}
 							]
 						}
-					]
+					],
+					"description": "In these routes, the admin creates, edits and deletes the post"
 				}
 			],
+			"description": "You need to be an admin to access this routes",
 			"auth": {
 				"type": "bearer",
 				"bearer": [
@@ -1028,7 +1061,8 @@
 										"posts",
 										"3"
 									]
-								}
+								},
+								"description": "Returns a post"
 							},
 							"response": [
 								{
@@ -1128,7 +1162,8 @@
 										"v1",
 										"posts"
 									]
-								}
+								},
+								"description": "Returns posts in pagination"
 							},
 							"response": [
 								{
@@ -1205,7 +1240,8 @@
 								}
 							]
 						}
-					]
+					],
+					"description": "These routes return posts"
 				},
 				{
 					"name": "Categories",
@@ -1232,7 +1268,8 @@
 										"v1",
 										"categories"
 									]
-								}
+								},
+								"description": "Returns categories nested"
 							},
 							"response": [
 								{
@@ -1332,7 +1369,8 @@
 										"categories",
 										"1"
 									]
-								}
+								},
+								"description": "Returns posts related to a specific category"
 							},
 							"response": [
 								{
@@ -1410,7 +1448,8 @@
 								}
 							]
 						}
-					]
+					],
+					"description": "Returns categories or posts related to a category"
 				},
 				{
 					"name": "Auth",
@@ -1432,16 +1471,19 @@
 										{
 											"key": "name",
 											"value": "example",
+											"description": "required|string|max:255",
 											"type": "text"
 										},
 										{
 											"key": "email",
-											"value": "example@gmail.com",
+											"value": "example@email.com",
+											"description": "required|string|email|max:255|unique:users",
 											"type": "text"
 										},
 										{
 											"key": "password",
 											"value": "12345678",
+											"description": "required|string|min:6",
 											"type": "text"
 										}
 									]
@@ -1457,7 +1499,8 @@
 										"v1",
 										"register"
 									]
-								}
+								},
+								"description": "Register route"
 							},
 							"response": [
 								{
@@ -1477,16 +1520,19 @@
 												{
 													"key": "name",
 													"value": "example",
+													"description": "required|string|max:255",
 													"type": "text"
 												},
 												{
 													"key": "email",
-													"value": "example@gmail.com",
+													"value": "example@email.com",
+													"description": "required|string|email|max:255|unique:users",
 													"type": "text"
 												},
 												{
 													"key": "password",
 													"value": "12345678",
+													"description": "required|string|min:6",
 													"type": "text"
 												}
 											]
@@ -1514,11 +1560,11 @@
 										},
 										{
 											"key": "Date",
-											"value": "Tue, 18 Jan 2022 11:29:34 GMT"
+											"value": "Tue, 18 Jan 2022 13:39:04 GMT"
 										},
 										{
 											"key": "Date",
-											"value": "Tue, 18 Jan 2022 11:29:34 GMT"
+											"value": "Tue, 18 Jan 2022 13:39:04 GMT"
 										},
 										{
 											"key": "Connection",
@@ -1550,7 +1596,7 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"data\": {\n        \"name\": \"example\",\n        \"email\": \"example@gmail.com\",\n        \"token\": \"8|ZtZMdvzszCVmLecGwonoRzLryphP4QtA4KNGccEe\"\n    },\n    \"status\": \"success\",\n    \"message\": \"You have successfully registered\"\n}"
+									"body": "{\n    \"data\": {\n        \"name\": \"example\",\n        \"email\": \"example@email.com\",\n        \"token\": \"12|ko8LNfZyrxy1zS6440WzeQ1HPgoM9F7gNYBkr2Ln\"\n    },\n    \"status\": \"success\",\n    \"message\": \"You have successfully registered\"\n}"
 								}
 							]
 						},
@@ -1571,11 +1617,13 @@
 										{
 											"key": "email",
 											"value": "example@gmail.com",
+											"description": "required|email|exists:users",
 											"type": "text"
 										},
 										{
 											"key": "password",
 											"value": "12345678",
+											"description": "required",
 											"type": "text"
 										}
 									]
@@ -1591,7 +1639,8 @@
 										"v1",
 										"login"
 									]
-								}
+								},
+								"description": "Login route"
 							},
 							"response": [
 								{
@@ -1611,11 +1660,13 @@
 												{
 													"key": "email",
 													"value": "example@gmail.com",
+													"description": "required|email|exists:users",
 													"type": "text"
 												},
 												{
 													"key": "password",
 													"value": "12345678",
+													"description": "required",
 													"type": "text"
 												}
 											]
@@ -1643,11 +1694,11 @@
 										},
 										{
 											"key": "Date",
-											"value": "Tue, 18 Jan 2022 11:29:48 GMT"
+											"value": "Tue, 18 Jan 2022 13:37:24 GMT"
 										},
 										{
 											"key": "Date",
-											"value": "Tue, 18 Jan 2022 11:29:48 GMT"
+											"value": "Tue, 18 Jan 2022 13:37:24 GMT"
 										},
 										{
 											"key": "Connection",
@@ -1671,7 +1722,7 @@
 										},
 										{
 											"key": "X-RateLimit-Remaining",
-											"value": "58"
+											"value": "59"
 										},
 										{
 											"key": "Access-Control-Allow-Origin",
@@ -1679,7 +1730,7 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"data\": {\n        \"name\": \"example\",\n        \"email\": \"example@gmail.com\",\n        \"token\": \"9|jlha8CiAJN47WmmtgDHVL4EIdgyfxWg2bX6BLQzM\"\n    },\n    \"status\": \"success\",\n    \"message\": \"You have logged in successfully\"\n}"
+									"body": "{\n    \"data\": {\n        \"name\": \"example\",\n        \"email\": \"example@gmail.com\",\n        \"token\": \"11|1duc7Q8iH8XCr5mJA7FdcD7TKjxyruQ51zI7PZNs\"\n    },\n    \"status\": \"success\",\n    \"message\": \"You have logged in successfully\"\n}"
 								}
 							]
 						},
@@ -1691,7 +1742,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "8|ZtZMdvzszCVmLecGwonoRzLryphP4QtA4KNGccEe",
+											"value": "12|ko8LNfZyrxy1zS6440WzeQ1HPgoM9F7gNYBkr2Ln",
 											"type": "string"
 										}
 									]
@@ -1710,11 +1761,13 @@
 										{
 											"key": "password",
 											"value": "12345678",
+											"description": "required|string",
 											"type": "text"
 										},
 										{
 											"key": "new_password",
 											"value": "12345678",
+											"description": "required|string|min:6",
 											"type": "text"
 										},
 										{
@@ -1735,7 +1788,8 @@
 										"v1",
 										"change-password"
 									]
-								}
+								},
+								"description": "Change password route"
 							},
 							"response": [
 								{
@@ -1755,11 +1809,13 @@
 												{
 													"key": "password",
 													"value": "12345678",
+													"description": "required|string",
 													"type": "text"
 												},
 												{
 													"key": "new_password",
 													"value": "12345678",
+													"description": "required|string|min:6",
 													"type": "text"
 												},
 												{
@@ -1792,11 +1848,11 @@
 										},
 										{
 											"key": "Date",
-											"value": "Tue, 18 Jan 2022 11:30:14 GMT"
+											"value": "Tue, 18 Jan 2022 13:40:12 GMT"
 										},
 										{
 											"key": "Date",
-											"value": "Tue, 18 Jan 2022 11:30:14 GMT"
+											"value": "Tue, 18 Jan 2022 13:40:12 GMT"
 										},
 										{
 											"key": "Connection",
@@ -1828,11 +1884,12 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n    \"data\": {\n        \"name\": \"example\",\n        \"email\": \"example@gmail.com\",\n        \"token\": \"10|0850wrNd9wMVFMgrBZ3YSTrE0xFdsUYE39pgQOPN\"\n    },\n    \"status\": \"success\",\n    \"message\": \"Password changed successfully\"\n}"
+									"body": "{\n    \"data\": {\n        \"name\": \"example\",\n        \"email\": \"example@email.com\",\n        \"token\": \"13|8TNe4CAJNsWH45XbjX9bcPbGjpBq4X69StUCTyvZ\"\n    },\n    \"status\": \"success\",\n    \"message\": \"Password changed successfully\"\n}"
 								}
 							]
 						}
-					]
+					],
+					"description": "Authentication Routes"
 				},
 				{
 					"name": "comments",
@@ -1854,16 +1911,19 @@
 										{
 											"key": "body",
 											"value": "this is comment 3424",
+											"description": "required|string",
 											"type": "text"
 										},
 										{
 											"key": "post_id",
-											"value": "1",
+											"value": "3",
+											"description": "required|int|exists:posts,id",
 											"type": "text"
 										},
 										{
 											"key": "parent_id",
 											"value": "1",
+											"description": "nullable|int|exists:comments,id",
 											"type": "text"
 										}
 									]
@@ -1879,9 +1939,106 @@
 										"v1",
 										"comments"
 									]
-								}
+								},
+								"description": "Create Comment route"
 							},
-							"response": []
+							"response": [
+								{
+									"name": "Comments.store",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "body",
+													"value": "this is comment 3424",
+													"description": "required|string",
+													"type": "text"
+												},
+												{
+													"key": "post_id",
+													"value": "3",
+													"description": "required|int|exists:posts,id",
+													"type": "text"
+												},
+												{
+													"key": "parent_id",
+													"value": "1",
+													"description": "nullable|int|exists:comments,id",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "localhost:8000/api/v1/comments",
+											"host": [
+												"localhost"
+											],
+											"port": "8000",
+											"path": [
+												"api",
+												"v1",
+												"comments"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Host",
+											"value": "localhost:8000"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 18 Jan 2022 13:43:03 GMT"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 18 Jan 2022 13:43:03 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.0.9"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "X-RateLimit-Limit",
+											"value": "60"
+										},
+										{
+											"key": "X-RateLimit-Remaining",
+											"value": "58"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Comment Created Successfully\",\n    \"status\": \"success\"\n}"
+								}
+							]
 						},
 						{
 							"name": "Comments.update",
@@ -1891,8 +2048,7 @@
 									{
 										"key": "Accept",
 										"value": "application/json",
-										"type": "text",
-										"disabled": true
+										"type": "text"
 									}
 								],
 								"body": {
@@ -1906,12 +2062,13 @@
 										{
 											"key": "body",
 											"value": "this comment updated",
+											"description": "required|string",
 											"type": "text"
 										}
 									]
 								},
 								"url": {
-									"raw": "localhost:8000/api/v1/comments/6",
+									"raw": "localhost:8000/api/v1/comments/12",
 									"host": [
 										"localhost"
 									],
@@ -1920,11 +2077,102 @@
 										"api",
 										"v1",
 										"comments",
-										"6"
+										"12"
 									]
-								}
+								},
+								"description": "Update Comment route"
 							},
-							"response": []
+							"response": [
+								{
+									"name": "Comments.update",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "_method",
+													"value": "PATCH",
+													"type": "text"
+												},
+												{
+													"key": "body",
+													"value": "this comment updated",
+													"description": "required|string",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "localhost:8000/api/v1/comments/12",
+											"host": [
+												"localhost"
+											],
+											"port": "8000",
+											"path": [
+												"api",
+												"v1",
+												"comments",
+												"12"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Host",
+											"value": "localhost:8000"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 18 Jan 2022 13:44:20 GMT"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 18 Jan 2022 13:44:20 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.0.9"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "X-RateLimit-Limit",
+											"value": "60"
+										},
+										{
+											"key": "X-RateLimit-Remaining",
+											"value": "59"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Comment Updated Successfully\",\n    \"status\": \"success\"\n}"
+								}
+							]
 						},
 						{
 							"name": "Comment.destroy",
@@ -1948,7 +2196,7 @@
 									]
 								},
 								"url": {
-									"raw": "localhost:8000/api/v1/comments/1",
+									"raw": "localhost:8000/api/v1/comments/12",
 									"host": [
 										"localhost"
 									],
@@ -1957,19 +2205,105 @@
 										"api",
 										"v1",
 										"comments",
-										"1"
+										"12"
 									]
-								}
+								},
+								"description": "Delete Comment Route"
 							},
-							"response": []
+							"response": [
+								{
+									"name": "Comment.destroy",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "_method",
+													"value": "DELETE",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "localhost:8000/api/v1/comments/12",
+											"host": [
+												"localhost"
+											],
+											"port": "8000",
+											"path": [
+												"api",
+												"v1",
+												"comments",
+												"12"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Host",
+											"value": "localhost:8000"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 18 Jan 2022 13:45:32 GMT"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 18 Jan 2022 13:45:32 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										},
+										{
+											"key": "X-Powered-By",
+											"value": "PHP/8.0.9"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, private"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "X-RateLimit-Limit",
+											"value": "60"
+										},
+										{
+											"key": "X-RateLimit-Remaining",
+											"value": "59"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"message\": \"Comment Deleted Successfully\",\n    \"status\": \"success\"\n}"
+								}
+							]
 						}
 					],
+					"description": "Routes related to posting and editing comments and deleting comments",
 					"auth": {
 						"type": "bearer",
 						"bearer": [
 							{
 								"key": "token",
-								"value": "1|nlGtnafKfoGQznZOgdMvbLXCgV44MEj19bIc2EQd",
+								"value": "11|1duc7Q8iH8XCr5mJA7FdcD7TKjxyruQ51zI7PZNs",
 								"type": "string"
 							}
 						]
@@ -2022,11 +2356,13 @@
 								{
 									"key": "likeable_id",
 									"value": "3",
+									"description": "required|exists:likeables,id",
 									"type": "text"
 								},
 								{
 									"key": "likeable_type",
 									"value": "App\\Models\\Post",
+									"description": "bail|required|string\nan existing class\nIlluminate\\Database\\Eloquent\\Model\nApp\\Interfaces\\Likeable",
 									"type": "text"
 								}
 							]
@@ -2042,7 +2378,8 @@
 								"v1",
 								"like"
 							]
-						}
+						},
+						"description": "like and unlike route"
 					},
 					"response": [
 						{
@@ -2062,11 +2399,13 @@
 										{
 											"key": "likeable_id",
 											"value": "3",
+											"description": "required|exists:likeables,id",
 											"type": "text"
 										},
 										{
 											"key": "likeable_type",
 											"value": "App\\Models\\Post",
+											"description": "bail|required|string\nan existing class\nIlluminate\\Database\\Eloquent\\Model\nApp\\Interfaces\\Likeable",
 											"type": "text"
 										}
 									]
@@ -2094,11 +2433,11 @@
 								},
 								{
 									"key": "Date",
-									"value": "Tue, 18 Jan 2022 11:31:26 GMT"
+									"value": "Tue, 18 Jan 2022 13:49:33 GMT"
 								},
 								{
 									"key": "Date",
-									"value": "Tue, 18 Jan 2022 11:31:26 GMT"
+									"value": "Tue, 18 Jan 2022 13:49:33 GMT"
 								},
 								{
 									"key": "Connection",
@@ -2130,11 +2469,101 @@
 								}
 							],
 							"cookie": [],
+							"body": "{\n    \"message\": \"Post unliked Successfully\",\n    \"status\": \"success\"\n}"
+						},
+						{
+							"name": "Like",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "likeable_id",
+											"value": "3",
+											"description": "required|exists:likeables,id",
+											"type": "text"
+										},
+										{
+											"key": "likeable_type",
+											"value": "App\\Models\\Post",
+											"description": "bail|required|string\nan existing class\nIlluminate\\Database\\Eloquent\\Model\nApp\\Interfaces\\Likeable",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:8000/api/v1/like",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"v1",
+										"like"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 18 Jan 2022 13:49:52 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 18 Jan 2022 13:49:52 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.0.9"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "57"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
 							"body": "{\n    \"message\": \"Post liked Successfully\",\n    \"status\": \"success\"\n}"
 						}
 					]
 				}
-			]
+			],
+			"description": "Routes for normal users"
 		}
 	]
 }
