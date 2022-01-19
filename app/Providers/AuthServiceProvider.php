@@ -29,19 +29,19 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::define('update-post', function (User $user, Post $post) {
-            return $user->id === $post->user_id;
+            return $user->id == $post->user_id;
         });
 
         Gate::define('delete-post', function (User $user, Post $post) {
-            return $user->id === $post->user_id;
+            return $user->id == $post->user_id;
         });
 
         Gate::define('update-comment', function (User $user, Comment $comment) {
-            return $user->id === $comment->user_id;
+            return $user->id == $comment->user_id;
         });
 
         Gate::define('delete-comment', function (User $user, Comment $comment) {
-            return $user->id === $comment->user_id;
+            return $user->id == $comment->user_id;
         });
     }
 }
